@@ -1,0 +1,20 @@
+---
+# Items that apply to ALL profiles:
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.0.5:8001/eureka/
+
+---
+spring:
+  application:
+    name: leader-data
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://localhost:8002
+      name: leader-data
+
+server:
+  port: 8003
