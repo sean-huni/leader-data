@@ -1,8 +1,9 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.0.M3'
+        springBootVersion = '2.1.0.M4'
     }
     repositories {
+        jcenter()
         mavenCentral()
         maven { url "https://repo.spring.io/snapshot" }
         maven { url "https://repo.spring.io/milestone" }
@@ -22,6 +23,7 @@ group = 'io.sciro'
 sourceCompatibility = 1.8
 
 repositories {
+    jcenter()
     mavenCentral()
     maven { url "https://repo.spring.io/snapshot" }
     maven { url "https://repo.spring.io/milestone" }
@@ -50,7 +52,7 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-zipkin')
     compile group: 'com.voodoodyne.jackson.jsog', name: 'jackson-jsog', version: '1.1.1'
     compile('org.springframework.cloud:spring-cloud-starter-openfeign')
-    runtime('org.springframework.boot:spring-boot-devtools')
+    compile('org.springframework.boot:spring-boot-devtools')
 
 
 //    compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix')
@@ -60,7 +62,6 @@ dependencies {
 //    runtime('org.springframework.boot:spring-boot-devtools')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-parent
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-parent', version: 'Finchley.RELEASE', ext: 'pom'
 }
 
 dependencyManagement {

@@ -17,7 +17,7 @@ tagAndPush(){
 rebuild(){
     gradle clean
     gradle build
-    docker build -f Dockerfile -t leader-data-img .
+    docker build -f Dockerfile -t leader-data-img . --no-cache
     tagAndPush
 }
 

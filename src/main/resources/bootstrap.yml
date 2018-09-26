@@ -1,9 +1,11 @@
 ---
 # Items that apply to ALL profiles:
 eureka:
+  instance:
+    hostname: 10.133.33.126
   client:
     serviceUrl:
-      defaultZone: http://192.168.0.5:8001/eureka/
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/
 
 ---
 spring:
@@ -13,7 +15,7 @@ spring:
     active: dev
   cloud:
     config:
-      uri: http://localhost:8002
+      uri: http://10.133.33.126:8002/
       name: leader-data
 
 server:

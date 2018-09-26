@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.neo4j.annotation.EnableNeo4jAuditing;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 
@@ -25,7 +24,6 @@ import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 @Configuration
 @EnableNeo4jRepositories(basePackages = "io.sciro.leaderdata.repo")
 @EntityScan(basePackages = "io.sciro.leaderdata.domain")
-@EnableNeo4jAuditing(setDates = true, modifyOnCreate = true)
 public class LiveDBConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(LiveDBConfig.class);
 
