@@ -3,6 +3,7 @@ package io.sciro.leaderdata.controller;
 import io.sciro.leaderdata.domain.Match;
 import io.sciro.leaderdata.repo.MatchRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -49,7 +50,14 @@ public class MatchCtrl {
 
 
     @PostMapping(path = "/")
+    @ResponseStatus(HttpStatus.CREATED)
     public Match saveNewMatch(@RequestBody Match match) {
         return matchRepo.save(match);
+    }
+
+    @PostMapping(path = "/save-all")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Iterable<Match> saveAllNewMatches(@RequestBody Iterable<Match> matches) {
+        return matchRepo.saveAll(matches);
     }
 }
