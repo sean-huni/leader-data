@@ -12,7 +12,7 @@ spring:
   application:
     name: leader-data
   profiles:
-    active: dev
+    active: live
   cloud:
     config:
       uri: http://10.133.33.126:8002/

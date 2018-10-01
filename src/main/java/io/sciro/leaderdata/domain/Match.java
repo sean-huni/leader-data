@@ -20,8 +20,8 @@ import java.util.Date;
  * E-MAIL    : kudzai@bcs.org
  * CELL      : +27-64-906-8809
  */
-@JsonIdentityInfo(generator = JSOGGenerator.class, property = "id")
 @NodeEntity(label = "match")
+@JsonIdentityInfo(generator = JSOGGenerator.class, property = "id")
 public class Match implements IdStrategy {
 
     @Id

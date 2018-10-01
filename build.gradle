@@ -53,15 +53,11 @@ dependencies {
     compile group: 'com.voodoodyne.jackson.jsog', name: 'jackson-jsog', version: '1.1.1'
     compile('org.springframework.cloud:spring-cloud-starter-openfeign')
     compile('org.springframework.boot:spring-boot-devtools')
-
-
-//    compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix')
-//    compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix-dashboard')
+    compile('org.neo4j:neo4j-ogm-embedded-driver:3.1.2')
+    
 //    compile('org.springframework.data:spring-data-rest-hal-browser')
     compile('org.springframework.cloud:spring-cloud-config-client')
-//    runtime('org.springframework.boot:spring-boot-devtools')
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-parent
 }
 
 dependencyManagement {

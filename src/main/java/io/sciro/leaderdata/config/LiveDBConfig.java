@@ -20,7 +20,7 @@ import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
  * E-MAIL    : kudzai@bcs.org
  * CELL      : +27-64-906-8809
  */
-@Profile("dev")
+@Profile("live")
 @Configuration
 @EnableNeo4jRepositories(basePackages = "io.sciro.leaderdata.repo")
 @EntityScan(basePackages = "io.sciro.leaderdata.domain")
@@ -44,7 +44,7 @@ public class LiveDBConfig {
 
     @Bean
     public org.neo4j.ogm.config.Configuration configuration() {
-        LOGGER.debug("URI: \n\n\nuri: {}\n\n\n", uri);
+        LOGGER.info("URI: \n\n\nlive-uri: {}\n\n\n", uri);
         return new org.neo4j.ogm.config.Configuration
                 .Builder()
                 .uri(uri)
