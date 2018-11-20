@@ -23,7 +23,7 @@ import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 @Profile("live")
 @Configuration
 @EnableNeo4jRepositories(basePackages = "io.sciro.leaderdata.repo")
-@EntityScan(basePackages = "io.sciro.leaderdata.domain")
+@EntityScan(basePackages = "io.sciro.leaderdata.entity")
 public class LiveDBConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(LiveDBConfig.class);
 
@@ -39,7 +39,7 @@ public class LiveDBConfig {
     @Bean
     public SessionFactory sessionFactory() {
         // with domain entity base package(s)
-        return new SessionFactory(configuration(), "io.sciro.leaderdata.domain");
+        return new SessionFactory(configuration(), "io.sciro.leaderdata.entity");
     }
 
     @Bean

@@ -2,7 +2,7 @@ package io.sciro.leaderdata;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -14,9 +14,10 @@ import org.springframework.context.annotation.ComponentScan;
  * E-MAIL    : kudzai@bcs.org
  * CELL      : +27-64-906-8809
  */
-@EnableEurekaClient
+//@EnableEurekaClient
 @SpringBootApplication
-@ComponentScan(basePackages = {"io.sciro.leaderdata.config", "io.sciro.leaderdata.repo", "io.sciro.leaderdata.domain", "io.sciro.leaderdata.controller"})
+@EntityScan(basePackages = "io.sciro.leaderdata.entity")
+@ComponentScan(basePackages = {"io.sciro.leaderdata.config", "io.sciro.leaderdata.repo", "io.sciro.leaderdata.entity", "io.sciro.leaderdata.controller"})
 public class LeaderDataApp {
     public static void main(String[] args) {
         SpringApplication.run(LeaderDataApp.class, args);

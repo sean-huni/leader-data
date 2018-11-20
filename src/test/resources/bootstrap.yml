@@ -1,0 +1,25 @@
+---
+spring:
+  application:
+    name: leader-data
+  profiles:
+    active: dev
+
+server:
+  port: 8002
+
+---
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    rest:
+      basePath: /spring-data/api/v1
+    neo4j:
+      uri: bolt://localhost:7687
+      embedded:
+        enabled: true
+      repositories:
+        enabled: true
+      username: neo4j
+      password: neo4spring_cloud

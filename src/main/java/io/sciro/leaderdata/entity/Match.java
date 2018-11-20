@@ -1,7 +1,9 @@
-package io.sciro.leaderdata.domain;
+package io.sciro.leaderdata.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.voodoodyne.jackson.jsog.JSOGGenerator;
+import lombok.Data;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -13,13 +15,14 @@ import java.util.Date;
 
 /**
  * PROJECT   : leader-data
- * PACKAGE   : io.sciro.leaderdata.domain
+ * PACKAGE   : io.sciro.leaderdata.entity
  * USER      : sean
  * DATE      : 17-Mon-Sep-2018
  * TIME      : 16:27
  * E-MAIL    : kudzai@bcs.org
  * CELL      : +27-64-906-8809
  */
+@Data
 @NodeEntity(label = "match")
 @JsonIdentityInfo(generator = JSOGGenerator.class, property = "id")
 public class Match implements IdStrategy {
@@ -32,83 +35,15 @@ public class Match implements IdStrategy {
     private String me;
     private String pc;
     private Character result;
+    @JsonFormat(pattern = "MMM dd, yyyy, HH:mm:ss a")
     private Date timestamp;
+    @JsonFormat(pattern = "MMM dd, yyyy, HH:mm:ss a")
     @LastModifiedDate
     private Date lastUpdated;
+    @JsonFormat(pattern = "MMM dd, yyyy, HH:mm:ss a")
     @CreatedDate
     private Date created;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCodeName() {
-        return codeName;
-    }
-
-    public void setCodeName(String codeName) {
-        this.codeName = codeName;
-    }
-
-    public Long getRound() {
-        return round;
-    }
-
-    public void setRound(Long round) {
-        this.round = round;
-    }
-
-    public String getMe() {
-        return me;
-    }
-
-    public void setMe(String me) {
-        this.me = me;
-    }
-
-    public String getPc() {
-        return pc;
-    }
-
-    public void setPc(String pc) {
-        this.pc = pc;
-    }
-
-    public Character getResult() {
-        return result;
-    }
-
-    public void setResult(Character result) {
-        this.result = result;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public Date getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(Date lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
 
     @Override
     public String toString() {
