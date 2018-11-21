@@ -17,7 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
 //@EnableEurekaClient
 @SpringBootApplication
 @EntityScan(basePackages = "io.sciro.leaderdata.entity")
-@ComponentScan(basePackages = {"io.sciro.leaderdata.config", "io.sciro.leaderdata.repo", "io.sciro.leaderdata.entity", "io.sciro.leaderdata.controller"})
+@ComponentScan(basePackages = {"io.sciro.leaderdata.config", "io.sciro.leaderdata.repo", "io.sciro.leaderdata.entity", "io.sciro.leaderdata.projection"})
 public class LeaderDataApp {
     public static void main(String[] args) {
         SpringApplication.run(LeaderDataApp.class, args);

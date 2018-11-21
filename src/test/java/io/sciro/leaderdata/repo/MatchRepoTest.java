@@ -3,18 +3,16 @@ package io.sciro.leaderdata.repo;
 import com.google.gson.Gson;
 import io.sciro.leaderdata.LeaderDataApp;
 import io.sciro.leaderdata.entity.Match;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -41,30 +39,30 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
  */
 @WebAppConfiguration(value = "classpath:bootstrap.yml")
 @SpringBootTest(classes = LeaderDataApp.class, webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-@ExtendWith(SpringExtension.class)
-@TestMethodOrder(OrderAnnotation.class)
+@RunWith(SpringRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @ActiveProfiles("dev")
 public class MatchRepoTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchRepoTest.class);
     private static final String TEST_NAME_1 = "Test-CodeName-1";
     private static final String TEST_NAME_2 = "Test-CodeName-2";
-    private int id;
+    private static int id;
 
     @Autowired
     private WebApplicationContext wac;
     private MockMvc mockMvc;
 
-    @BeforeAll
+    @BeforeClass
     public static void setup() {
         LOGGER.info("Testing MatchRepo...");
     }
 
-    @AfterAll
+    @AfterClass
     public static void teardown() {
         LOGGER.info("Completed MatchRepo tests...");
     }
 
-    @BeforeEach
+    @Before
     public void setUp() {
         this.mockMvc = webAppContextSetup(wac).build();
     }
@@ -75,17 +73,18 @@ public class MatchRepoTest {
         final Match match1 = new Match(TEST_NAME_1, 1L, "SCISSORS", "PAPER", 'W', date, date, date);
         final Match match2 = new Match(TEST_NAME_2, 1L, "ROCK", "PAPER", 'L', new Date(), new Date(), new Date());
         final Match match3 = new Match(TEST_NAME_1, 2L, "PAPER", "PAPER", 'D', new Date(), new Date(), new Date());
+        final Match match4 = new Match(TEST_NAME_1, 3L, "PAPER", "ROCK", 'W', new Date(), new Date(), new Date());
 
         List<Match> matchList = new ArrayList<>();
         matchList.add(match1);
-        matchList.add(match2);
         matchList.add(match3);
+        matchList.add(match2);
+        matchList.add(match4);
 
         for (Match match : matchList) {
             final String payload = new Gson().toJson(match);
 
             LOGGER.debug("Matches: " + payload);
-// {"codeName":"Test-CodeName-1","round":1,"me":"ROCK","pc":"ROCK","result":"D","lastUpdated":"Nov 19, 2018, 9:44:11 PM","created":"Nov 19, 2018, 9:44:11 PM"}
 
             MvcResult results = mockMvc.perform(post(APP_BASE_URL + "/matches")
                     .content(payload)
@@ -103,7 +102,7 @@ public class MatchRepoTest {
 
     @Test
     public void b_findById() throws Exception {
-        mockMvc.perform(get(APP_BASE_URL + "/matches/" + id)
+        mockMvc.perform(get(APP_BASE_URL + "/matches/"+id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -122,7 +121,7 @@ public class MatchRepoTest {
 
     @Test
     public void d_deleteById() throws Exception {
-        mockMvc.perform(delete(APP_BASE_URL + "/matches/" + id)
+        mockMvc.perform(delete(APP_BASE_URL + "/matches/"+id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());

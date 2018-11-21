@@ -83,7 +83,7 @@
     <orderEntry type="library" name="Gradle: com.netflix.ribbon:ribbon-transport:2.3.0" level="project" />
     <orderEntry type="library" name="Gradle: com.netflix.ribbon:ribbon-loadbalancer:2.3.0" level="project" />
     <orderEntry type="library" name="Gradle: com.netflix.ribbon:ribbon-core:2.3.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.netflix.hystrix:hystrix-core:1.5.12" level="project" />
+    <orderEntry type="library" name="Gradle: com.netflix.hystrix:hystrix-core:1.5.18" level="project" />
     <orderEntry type="library" name="Gradle: com.netflix.archaius:archaius-core:0.7.6" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-logging:2.1.0.M4" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.2.3" level="project" />

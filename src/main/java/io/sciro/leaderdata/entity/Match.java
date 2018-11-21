@@ -44,6 +44,19 @@ public class Match implements IdStrategy {
     @CreatedDate
     private Date created;
 
+    public Match() {
+    }
+
+    public Match(String codeName, Long round, String me, String pc, Character result, Date timestamp, Date lastUpdated, Date created) {
+        this.codeName = codeName;
+        this.round = round;
+        this.me = me;
+        this.pc = pc;
+        this.result = result;
+        this.timestamp = timestamp;
+        this.lastUpdated = lastUpdated;
+        this.created = created;
+    }
 
     @Override
     public String toString() {

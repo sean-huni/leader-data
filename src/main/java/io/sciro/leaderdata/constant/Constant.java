@@ -10,5 +10,5 @@ package io.sciro.leaderdata.constant;
  * CELL      : +27-64-906-8809
  */
 public class Constant {
-    public static final String APP_BASE_URL = "/spring-data/api/v1";
+    public static final String APP_BASE_URL = "/api/v1";
 }

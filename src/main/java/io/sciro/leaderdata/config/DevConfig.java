@@ -3,6 +3,7 @@ package io.sciro.leaderdata.config;
 import org.neo4j.ogm.session.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,10 +28,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class DevConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(DevConfig.class);
 
-    //Values Injected in the Live-Config: @Value("${spring.data.neo4j.uri}")
-    private final String uri = "bolt://localhost:7687";
-    private final String username = "neo4j";
-    private final String password = "neo4spring_cloud";
+    @Value("${spring.data.neo4j.uri}")
+    private String uri;
+    @Value("${spring.data.neo4j.username}")
+    private String username;
+    @Value("${spring.data.neo4j.password}")
+    private String password;
 
     @Bean
     public SessionFactory sessionFactory() {
