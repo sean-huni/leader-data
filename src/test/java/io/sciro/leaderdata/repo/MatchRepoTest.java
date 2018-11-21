@@ -3,13 +3,11 @@ package io.sciro.leaderdata.repo;
 import com.google.gson.Gson;
 import io.sciro.leaderdata.LeaderDataApp;
 import io.sciro.leaderdata.entity.Match;
-import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +17,17 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static io.sciro.leaderdata.constant.Constant.APP_BASE_URL;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 /**
@@ -41,26 +39,28 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
  * E-MAIL    : kudzai@bcs.org
  * CELL      : +27-64-906-8809
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @WebAppConfiguration(value = "classpath:bootstrap.yml")
 @SpringBootTest(classes = LeaderDataApp.class, webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @ExtendWith(SpringExtension.class)
+@TestMethodOrder(OrderAnnotation.class)
 @ActiveProfiles("dev")
 public class MatchRepoTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchRepoTest.class);
+    private static final String TEST_NAME_1 = "Test-CodeName-1";
+    private static final String TEST_NAME_2 = "Test-CodeName-2";
+    private int id;
 
     @Autowired
     private WebApplicationContext wac;
     private MockMvc mockMvc;
-    private static final String TEST_NAME = "Test-CodeName-1";
 
     @BeforeAll
-    public static void setup(){
+    public static void setup() {
         LOGGER.info("Testing MatchRepo...");
     }
 
     @AfterAll
-    public static void teardown(){
+    public static void teardown() {
         LOGGER.info("Completed MatchRepo tests...");
     }
 
@@ -70,34 +70,40 @@ public class MatchRepoTest {
     }
 
     @Test
-    public void matchRepoTest_1_saveNewMatch() throws Exception {
+    public void a_saveNewMatch() throws Exception {
         final Date date = new Date();
-        final Gson gson = new Gson();
-        final Match match = new Match();
-        match.setCodeName(TEST_NAME);
-        match.setTimestamp(date);
-        match.setCreated(date);
-        match.setLastUpdated(date);
-        match.setMe("ROCK");
-        match.setPc("ROCK");
-        match.setResult('D');
-        match.setRound(1L);
+        final Match match1 = new Match(TEST_NAME_1, 1L, "SCISSORS", "PAPER", 'W', date, date, date);
+        final Match match2 = new Match(TEST_NAME_2, 1L, "ROCK", "PAPER", 'L', new Date(), new Date(), new Date());
+        final Match match3 = new Match(TEST_NAME_1, 2L, "PAPER", "PAPER", 'D', new Date(), new Date(), new Date());
 
-//        Resource<Match> matchResource = new Resource<>(match);
+        List<Match> matchList = new ArrayList<>();
+        matchList.add(match1);
+        matchList.add(match2);
+        matchList.add(match3);
 
-        final String payload = gson.toJson(match);
+        for (Match match : matchList) {
+            final String payload = new Gson().toJson(match);
 
-        LOGGER.debug("Match: "+ match.toString());
+            LOGGER.debug("Matches: " + payload);
 // {"codeName":"Test-CodeName-1","round":1,"me":"ROCK","pc":"ROCK","result":"D","lastUpdated":"Nov 19, 2018, 9:44:11 PM","created":"Nov 19, 2018, 9:44:11 PM"}
-        mockMvc.perform(post(APP_BASE_URL+"/matches")
-                .content(payload)
-                .contentType(MediaType.APPLICATION_JSON)).andDo(print())
-                .andExpect(status().isCreated());
+
+            MvcResult results = mockMvc.perform(post(APP_BASE_URL + "/matches")
+                    .content(payload)
+                    .contentType(MediaType.APPLICATION_JSON)).andDo(print())
+                    .andExpect(status().isCreated())
+                    .andReturn();
+
+            String resp = results.getResponse().getHeader("Location");
+            int pos = resp.lastIndexOf("/");
+            pos++;
+            id = Integer.parseInt(resp.substring(pos));
+        }
+
     }
 
     @Test
-    public void matchRepoTest_2_findById() throws Exception {
-        mockMvc.perform(get(APP_BASE_URL+"/matches/2")
+    public void b_findById() throws Exception {
+        mockMvc.perform(get(APP_BASE_URL + "/matches/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -105,37 +111,34 @@ public class MatchRepoTest {
     }
 
     @Test
-    public void matchRepoTest_3_findAllByCodeName() throws Exception {
-        mockMvc.perform(get(APP_BASE_URL+"/matches?findAllByCodeName?codeName="+TEST_NAME)
+    public void c_findAllByCodeName() throws Exception {
+        mockMvc.perform(get(APP_BASE_URL + "/matches/search/findAllByCodeName?codeName=" + TEST_NAME_1)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.parseMediaType("application/hal+json;charset=UTF-8")));
+                .andExpect(content().contentTypeCompatibleWith(MediaType.parseMediaType("application/hal+json;charset=UTF-8")))
+                .andExpect(jsonPath("$._embedded.matches.length()").value(3));
     }
 
-
     @Test
-    public void matchRepoTest_4_deleteById() throws Exception {
-        mockMvc.perform(delete(APP_BASE_URL+"/matches/2")
+    public void d_deleteById() throws Exception {
+        mockMvc.perform(delete(APP_BASE_URL + "/matches/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
 
+    /**
+     * Ugly workaround to delete a resource via a GET HTTP-METHOD.
+     *
+     * @throws Exception
+     */
     @Test
-    public void matchRepoTest_5_deleteAllByCodeName() throws Exception {
-        final Gson gson = new Gson();
-        final Match match = new Match();
-        match.setCodeName(TEST_NAME);
-
-        final String json = gson.toJson(match);
-
-        mockMvc.perform(delete(APP_BASE_URL+"/matches/search/deleteAllByCodeName")
-                .content(json)
+    public void e_deleteAllByCodeName() throws Exception {
+        mockMvc.perform(get(APP_BASE_URL + "/matches/search/deleteAllByCodeName?codeName=" + TEST_NAME_1)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber());
     }
-
-
 }
