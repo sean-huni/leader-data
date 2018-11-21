@@ -6,29 +6,6 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:8001/eureka/
-
-####################
-# Must be Deleted
-####################
----
-spring:
-  main:
-    allow-bean-definition-overriding: true
-  data:
-    rest:
-      basePath: /api/v1
-    neo4j:
-      uri: bolt://localhost:7687
-      embedded:
-        enabled: true
-      repositories:
-        enabled: true
-      username: neo4j
-      password: neo4spring_cloud
-####################
-# Must be Deleted
-####################
-
 ---
 spring:
   main:
