@@ -1,4 +1,4 @@
-package io.sciro.leaderdata.repo;
+package io.sciro.leaderdata.repo.integration;
 
 import com.google.gson.Gson;
 import io.sciro.leaderdata.LeaderDataApp;
@@ -92,10 +92,12 @@ public class MatchRepoTest {
                     .andExpect(status().isCreated())
                     .andReturn();
 
-            String resp = results.getResponse().getHeader("Location");
-            int pos = resp.lastIndexOf("/");
-            pos++;
-            id = Integer.parseInt(resp.substring(pos));
+            if(match.getCodeName().equalsIgnoreCase(TEST_NAME_2)){
+                String resp = results.getResponse().getHeader("Location");
+                int pos = resp.lastIndexOf("/")+1;
+                id = Integer.parseInt(resp.substring(pos));
+            }
+
         }
 
     }

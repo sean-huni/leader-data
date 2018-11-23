@@ -1,10 +1,6 @@
 
 j
 :src/main/java/io/sciro/leaderdata/config/LiveDBConfig.java,1/9/19afd27ebca843be80c07188f144c201b248aec2
-c
-3src/main/java/io/sciro/leaderdata/domain/Match.java,c/b/cbb195f22f9b68ad0e5a27c052839f9046026935
-k
-;src/main/java/io/sciro/leaderdata/controller/MatchCtrl.java,e/6/e643f63c7173a9d490bbefc30e7d4c3fa83dc1ae
 6
 run.sh,3/2/324fcb49f1cf313ebdd7cbda6a71b73727ddd94d
 <
@@ -20,5 +16,13 @@ e
 5src/main/java/io/sciro/leaderdata/repo/MatchRepo.java,4/6/46d6b27640df113fa87816f9b6ba2d3e1d3fe9af
 g
 7src/main/java/io/sciro/leaderdata/config/DevConfig.java,4/7/4709418a0cde8b19aca60ab00dd6dd1438ac6eb3
-i
-9src/test/java/io/sciro/leaderdata/repo/MatchRepoTest.java,4/d/4dce94a47e839498ec13a0f0f07fc9df09d0c651
+]
+-.idea/httpRequests/2018-11-20T041146.200.json,4/4/4425f7e67a31983e70fdc49899c463b13164da10
+h
+8src/main/java/io/sciro/leaderdata/constant/Constant.java,d/0/d09ff2e9fc5722639b9f24a835a220ff430ae1de
+m
+=src/main/java/io/sciro/leaderdata/projection/InlineMatch.java,b/d/bdb2a2227d879856de1b981cff6bf5fd2bd5586f
+c
+3src/main/java/io/sciro/leaderdata/entity/Match.java,0/7/07445d559c3fe1d45c663b1a85a756ce01cbb039
+u
+Esrc/test/java/io/sciro/leaderdata/repo/integration/MatchRepoTest.java,f/7/f71775c39cd29ce854d3c4d041a2357acf9057dc
